@@ -1,0 +1,78 @@
+@startuml song
+
+package "src" {
+
+  class Conductor {
+    -af: AudioFormat
+    -running: boolean {static}
+    -noteDict: Map<String, String> {static}
+    -players: List<Player> {static}
+    +Conductor(af: AudioFormat)
+    +isRunning(): boolean {static}
+    +main(args: String[]): void {static}
+    -readSong(filename: String): List<BellNote> {static}
+    -playSong(song: List<BellNote>): void
+  }
+
+  class Player {
+    -af: AudioFormat
+    -name: String
+    -note: Note
+    -lock: Object
+    -playing: boolean
+    -length: NoteLength
+    +Player(name: String, note: Note, af: AudioFormat)
+    +run(): void
+    +play(length: NoteLength): void
+    +isPlaying(): boolean
+    +getName(): String
+    -playNote(line: SourceDataLine, bn: BellNote): void
+  }
+
+  class BellNote {
+    -note: Note
+    -length: NoteLength
+    +BellNote(note: Note, length: NoteLength)
+    +toString(): String
+  }
+
+  enum NoteLength {
+    +WHOLE
+    +HALF
+    +QUARTER
+    +EIGTH
+    -timeMs: int
+    +timeMs(): int
+  }
+
+  enum Note {
+    +REST
+    +A4
+    +A4S
+    +B4
+    +C4
+    +C4S
+    +D4
+    +D4S
+    +E4
+    +F4
+    +F4S
+    +G4
+    +G4S
+    +A5
+    +SAMPLE_RATE: int {static}
+    +MEASURE_LENGTH_SEC: int {static}
+    -sinSample: byte[]
+    +sample(): byte[]
+  }
+
+  ' Relationships
+  Conductor o--> "many" Player
+  Conductor o--> "many" BellNote
+  Player --> "1" Note
+  Player --> "1" NoteLength
+  BellNote --> "1" Note
+  BellNote --> "1" NoteLength
+}
+
+@enduml
