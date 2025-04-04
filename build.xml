@@ -2,6 +2,9 @@
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
   <property name="dist" location="dist"/>
+  <!-- passed argument (name of the song) -->
+  <property name="song" value=""/>
+
 
   <target name="init">
     <mkdir dir="${dist}"/>
@@ -21,7 +24,9 @@
   </target>
 
   <target name="run" depends="jar">
-    <java jar="dist/${ant.project.name}.jar" fork="true"/>
+    <java jar="dist/${ant.project.name}.jar" fork="true">
+      <arg line="${song}"/>
+    </java>
   </target>
 
   <target name="clean">

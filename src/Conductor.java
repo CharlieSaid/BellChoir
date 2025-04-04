@@ -1,6 +1,5 @@
 package src;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ public class Conductor{
         
         // Create the Conductor
         Conductor c = new Conductor(af);
-        List<BellNote> song = readSong("bad_file_2.txt");
+        List<BellNote> song = readSong(args[0]);
         
         if (song == null) {
             System.out.println("Terminating");
@@ -178,7 +177,7 @@ public class Conductor{
             p.play(length);
             while (p.isPlaying()) {
                 // Do nothing until the player is done playing.
-            }   
+            }
         }
         System.out.println("Song is over.");
         running = false;
